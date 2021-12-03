@@ -77,7 +77,7 @@ export default {
   },
   data() {
     return {
-      navigationChecked: INFINITE_SCROLL,
+      navigationChecked: PAGINATION,
       dataComments: [],
       partData: [],
       scrollEnd: false,
