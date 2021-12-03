@@ -42,8 +42,8 @@ export default {
 
 <style scoped>
 .sort-filter-block .th-btn {
-  margin: 0 3px;
   border: none;
+  box-sizing: border-box;
   border-right: 1px solid silver;
   background-color: transparent;
   font-size: 1em;

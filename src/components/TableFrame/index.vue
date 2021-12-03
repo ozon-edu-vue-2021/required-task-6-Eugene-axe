@@ -41,9 +41,8 @@ export default {
       let inv = order === ASC ? 1 : -1;
       return array.sort((a, b) => (a[name] < b[name] ? 1 * inv : -1 * inv));
     },
-    filteredComments(value, nameCol) {
-      this.isFilter = !!value;
-      this.$emit('filter' , {value , nameCol , isFilter : this.isFilter});
+    filteredComments(filterObj) {
+      this.$emit('filter' , filterObj);
     },
   },
   computed: {

@@ -5,7 +5,7 @@ export default {
   render(h, context) {
     const { filteredComments , nameCol } = context.props;
     const handlerInput = (event) => {
-      filteredComments(event.target.value , nameCol)
+      filteredComments( {[nameCol] : event.target.value})
     };
     return h("div", [
       h("div", { class: { tooltip: true} }, [

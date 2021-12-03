@@ -23,10 +23,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    // currentPage: {
-    //   type: Number,
-    //   required: true,
-    // },
     scrollEnd: {
       type: Boolean,
       required: true,

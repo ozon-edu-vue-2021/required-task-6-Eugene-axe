@@ -4,7 +4,10 @@
     <div class="pagination-bar">
       <ul class="pagination-list">
         <li v-show="currentPage !== 1">
-          <a class="pagination-list__link" href="#" @click="updateCurrentPage(currentPage -1)"
+          <a
+            class="pagination-list__link"
+            href="#"
+            @click="updateCurrentPage(currentPage - 1)"
             >предыдущая
           </a>
         </li>
@@ -21,7 +24,10 @@
           ></a>
         </li>
         <li v-show="isShowNext">
-          <a class="pagination-list__link" href="#" @click="updateCurrentPage(currentPage -1)"
+          <a
+            class="pagination-list__link"
+            href="#"
+            @click="updateCurrentPage(currentPage + 1)"
             >следующая
           </a>
         </li>
@@ -36,7 +42,6 @@ export default {
   data() {
     return {
       countPagLink: 5,
-      isShowNext: true,
     };
   },
   props: {
@@ -44,14 +49,14 @@ export default {
       type: Array,
       default: () => [],
     },
-    currentPage : {
-      type : Number,
+    currentPage: {
+      type: Number,
       required: true,
     },
-    countRowPerPage : {
-      type : Number,
-      reauired : true
-    }
+    countRowPerPage: {
+      type: Number,
+      reauired: true,
+    },
   },
   computed: {
     rowPage() {
@@ -68,14 +73,13 @@ export default {
     numericInPagBar() {
       let numeric = new Array(this.visiblePageCount).fill(0);
       const middle = Math.floor(this.visiblePageCount / 2) + 1;
-      if (this.currentPage <= middle) {
+      if (this.currentPage < middle) {
         numeric = numeric.reduce((acc, item, i) => {
           acc.push(this.currentPage + i);
           return acc;
         }, []);
       } else {
         numeric = numeric.reduce((acc, item, i) => {
-          this.isShowNext = this.currentPage < this.amountPage;
           acc.push(
             this.currentPage + 1 + i - middle <= this.amountPage
               ? this.currentPage + 1 + i - middle
@@ -86,6 +90,9 @@ export default {
       }
       return numeric;
     },
+    isShowNext() {
+      return this.currentPage < this.amountPage;
+    },
   },
   methods: {
     handleNumberPage(n) {
@@ -95,8 +102,8 @@ export default {
       return new Date().getTime() * Math.random();
     },
     updateCurrentPage(n) {
-      this.$emit('updateCurrentPage' , n)
-    }
+      this.$emit("updateCurrentPage", n);
+    },
   },
 };
 </script>

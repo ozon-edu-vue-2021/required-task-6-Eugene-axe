@@ -81,11 +81,7 @@ export default {
       dataComments: [],
       partData: [],
       scrollEnd: false,
-      filter: {
-        nameCol: "",
-        value: "",
-        isFilter: false,
-      },
+      filter: {},
       currentPage: 1,
       countRowPerPage: 20,
     };
@@ -93,19 +89,25 @@ export default {
   created() {
     fetch("https://jsonplaceholder.typicode.com/comments")
       .then((response) => response.json())
-      .then((data) => (this.dataComments = data)).then(
-        () => {this.partData = this.filteredDataComments.slice(0, this.countRowPerPage)}
-      );
+      .then((data) => (this.dataComments = data))
+      .then(() => {
+        this.partData = this.filteredDataComments.slice(
+          0,
+          this.countRowPerPage
+        );
+      });
   },
   mounted() {},
   computed: {
     filteredDataComments() {
-      const { nameCol, value, isFilter } = this.filter;
-      return isFilter
+      return this.isFilter
         ? this.dataComments.filter((comment) => {
-            return (comment[nameCol] + "").includes(value);
+            return this.isIncludesProperty(this.filter, comment);
           })
         : this.dataComments;
+    },
+    isFilter() {
+      return !!Object.keys(this.filter).length;
     },
     navMenu() {
       return [PAGINATION, INFINITE_SCROLL, VIRTUAL_SCROLL];
@@ -124,7 +126,7 @@ export default {
     pushData(page) {
       setTimeout(() => {
         const newData = this.filteredDataComments.slice(
-          (page-1) * this.countRowPerPage,
+          (page - 1) * this.countRowPerPage,
           page * this.countRowPerPage
         );
         const oldLength = this.partData.length;
@@ -136,12 +138,19 @@ export default {
     },
     handlerFilter(filterObj) {
       this.updateCurrentPage(1);
-      this.filter = { ...filterObj };
+      this.filter = { ...this.filter, ...filterObj };
       this.partData = [];
       this.pushData(1, 50);
     },
     updateCurrentPage(n) {
       this.currentPage = n;
+    },
+    isIncludesProperty(objWhat, objWhere) {
+      let isContains = true;
+      for (const key in objWhat) {
+        if (!(objWhere[key]+"").includes(objWhat[key])) return false;
+      }
+      return isContains;
     },
   },
 };
